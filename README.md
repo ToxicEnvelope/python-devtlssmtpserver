@@ -14,5 +14,18 @@ Installation
 Usage
 -----
 
+How to use the class in your unittest or test application
+
+    root@devbox01:~# python
+    Python 2.x.x
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> from devtlssmtpserver import SMTPDevServer
+    >>> s = SMTPDevServer(port=252525,timeout=5)
+    >>> s.receiveOneMail()
+    Waiting for mail timedout, shuting down reactor
+    {'rawmail': [], 'communication': []}
+
+Or to run the standalone version
+
     python server.py
     echo "this is a fancy mail" | python sendmail.py recipient@domain.tld
