@@ -8,7 +8,7 @@ Installation
 ------------
 
     sudo pip install twisted
-    sudo pip install git+git://github.com/tspycher/python-devtlssmtpserver.git#egg=devtlssmtpserver
+    sudo pip install https://github.com/tspycher/python-devtlssmtpserver/archive/master.zip#egg=devtlssmtpserver
 
 
 Usage
