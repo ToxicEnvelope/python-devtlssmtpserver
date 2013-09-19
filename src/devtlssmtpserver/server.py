@@ -63,6 +63,7 @@ class SMTPDevServer(object):
         self.port = port
 
     def receiveOneMail(self):
+        # TODO: Add timeout
         factory = TLSFactory()
         factory.protocol = TLSServer
         con = reactor.listenTCP(self.port, factory)
@@ -71,5 +72,6 @@ class SMTPDevServer(object):
         return {"communication": factory.communication, "rawmail": factory.mailcontent}
 
 if __name__ == '__main__':
+    # TODO: Add install stuff for python
     smtp = SMTPDevServer(port=2525)
-    comm, mail = smtp.receiveOneMail()
+    data = smtp.receiveOneMail()

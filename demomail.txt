@@ -1,0 +1,7 @@
+Content-Type: text/plain; charset=us-ascii
+Subject: This is a Testmail
+From: User <user@domain.tld>
+To:User <user@domain.tld>
+
+
+This is a Testmail
