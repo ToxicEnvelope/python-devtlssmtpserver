@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='python-devtlssmtpserver',
-      version='0.1',
+      version='0.1.1',
       description='A smtp Server for Developers with STARTTLS Support',
       author='Thomas Spycher',
       author_email='me@tspycher.com',

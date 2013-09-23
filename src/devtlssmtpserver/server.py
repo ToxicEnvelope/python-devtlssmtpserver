@@ -9,6 +9,8 @@ from twisted.protocols.basic import LineReceiver
 class TLSFactory(ServerFactory):
     mailcontent = []
     communication = []
+    tlsCert = None
+    tlsKey = None
 
 
 class TLSServer(LineReceiver):
@@ -30,8 +32,8 @@ class TLSServer(LineReceiver):
         if "starttls" in line.lower():
             self.sendLine('220 Go ahead, i like TLS')
             ctx = ssl.DefaultOpenSSLContextFactory(
-                    privateKeyFileName='certs/server.key', 
-                    certificateFileName='certs/server.crt',
+                    privateKeyFileName=self.factory.tlsKey,
+                    certificateFileName=self.factory.tlsCert,
                     sslmethod=ssl.SSL.SSLv23_METHOD)
                     
             self.transport.startTLS(ctx, self.factory)
@@ -63,13 +65,20 @@ class TLSServer(LineReceiver):
 class SMTPDevServer(object):
     port = None
     timeout = None
+    tlsCert = None
+    tlsKey = None
 
-    def __init__(self, port=102525, timeout=None):
+    def __init__(self, port=22525, timeout=None, tlscert=None, tlskey=None):
         self.port = port
         self.timeout = timeout
+        self.tlsCert = tlscert
+        self.tlsKey = tlskey
 
     def receiveOneMail(self):
         factory = TLSFactory()
+        factory.tlsCert = self.tlsCert
+        factory.tlsKey = self.tlsKey
+
         factory.protocol = TLSServer
         reactor.listenTCP(self.port, factory)
 
@@ -92,11 +101,11 @@ class SMTPDevServer(object):
             time.sleep(1)
             timeWaited += 1
             if timeWaited >= self.timeout:
-                print "Waiting for mail timedout, shuting down reactor"
+                print "Waiting for mail timeout, shutting down reactor"
                 break
         reactor.callFromThread(reactor.stop)
 
 if __name__ == '__main__':
-    smtp = SMTPDevServer(port=2525, timeout=10)
+    smtp = SMTPDevServer(port=22525, timeout=10, tlscert='certs/server.crt', tlskey='certs/server.key')
     data = smtp.receiveOneMail()
     print json.dumps(data, indent=2)

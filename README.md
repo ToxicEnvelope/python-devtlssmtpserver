@@ -20,9 +20,9 @@ How to use the class in your unittest or test application
     Python 2.x.x
     Type "help", "copyright", "credits" or "license" for more information.
     >>> from devtlssmtpserver import SMTPDevServer
-    >>> s = SMTPDevServer(port=252525,timeout=5)
+    >>> s = SMTPDevServer(port=22525, timeout=5,tlscert='certs/server.crt', tlskey='certs/server.key')
     >>> s.receiveOneMail()
-    Waiting for mail timedout, shuting down reactor
+    Waiting for mail timeout, shutting down reactor
     {'rawmail': [], 'communication': []}
 
 Or to run the standalone version
